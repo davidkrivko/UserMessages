@@ -1,12 +1,14 @@
 from pydantic.v1 import BaseSettings
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
 from sqlmodel import SQLModel
 
 
 class Settings(BaseSettings):
-    PSQL_DB_URL: str
+    POSTGRES_DB: str
+    POSTGRES_USER: str
+    POSTGRES_PASSWORD: str
+    POSTGRES_HOST: str
+    POSTGRES_PORT: str
 
     class Config:
         env_file = '.env'
@@ -15,12 +17,17 @@ class Settings(BaseSettings):
 settings = Settings()
 
 # Create async engine
-engine = create_async_engine(settings.PSQL_DB_URL, echo=True)
+engine = create_async_engine(
+    f"postgresql+asyncpg://"
+    f"{settings.POSTGRES_USER}:{settings.POSTGRES_PASSWORD}@"
+    f"{settings.POSTGRES_HOST}:{settings.POSTGRES_PORT}"
+    f"/{settings.POSTGRES_DB}"
+    , echo=True
+)
 
 
 async def init_database():
     async with engine.begin() as conn:
-        from src.users.models import CustomUsersDB
         await conn.run_sync(SQLModel.metadata.create_all)
 
 
