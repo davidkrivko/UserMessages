@@ -25,15 +25,16 @@ A FastAPI service integrated with PostgreSQL, featuring a role-based access cont
    git clone https://github.com/davidkrivko/UserMessages.git
 
 
-2. Download requirements:
+2. Run docker:
    ```sh
-   python -m venv venv
-   venv\Scripts\activate
-   pip install -r req.txt
+   docker-compose up -d
 
 
-3. Upload database:
+3. Run migrations:
    ```sh
-   psql -U <username> -d <dbname> -f /path/to/dump_file.dump
+   alembic upgrade head
 
 
+4. Upload database data:
+   ```sh
+   psql -U <username> -d <dbname> -f dump_file.dump
