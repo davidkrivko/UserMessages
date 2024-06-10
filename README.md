@@ -37,4 +37,4 @@ A FastAPI service integrated with PostgreSQL, featuring a role-based access cont
 
 4. Upload database data:
    ```sh
-   psql -U <username> -d <dbname> -f dump_file.dump
+   psql -U <username> -d <dbname> -f dump.sql

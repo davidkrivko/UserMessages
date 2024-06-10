@@ -44,7 +44,7 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: celery
-    command: celery -A src.main.celery worker --loglevel=info
+    command: celery -A src.celery worker --loglevel=info
     volumes:
       - .:/app
     depends_on:
