@@ -1,7 +1,5 @@
 from fastapi import FastAPI
-from contextlib import asynccontextmanager
 
-from src.database import init_database
 from src.messages.routers import messages_router
 from src.users.auth import auth_backend
 from src.users.manager import fastapi_users
@@ -14,7 +12,6 @@ app = FastAPI()
 
 ### MESSAGE ROUTERS ###
 app.include_router(messages_router, tags=["messages"])
-
 ###
 
 
